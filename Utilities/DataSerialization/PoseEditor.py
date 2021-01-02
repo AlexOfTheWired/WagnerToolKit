@@ -75,6 +75,8 @@ class Pose(object):
             # Append control to list
             self.ctrlList.append(mSel[idx])
 
+        return self.ctrlList
+
     def getControlTranslate(self):
         """
         This method queries each controls translate values and returns a dictionary
