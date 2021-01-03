@@ -33,7 +33,6 @@ import maya.OpenMaya as OM
 ################################################
 
 
-
 ################################################
 # Classes 
 ################################################
@@ -61,6 +60,9 @@ class Pose(object):
         self.ctrlAttributeList = None     #
         self.jsonString        = None     # 
 
+#######################################
+# Get Control Methods
+#######################################
 
     def getControlList(self):
         """
@@ -202,8 +204,47 @@ class Pose(object):
         and populates a list with them.
         """
 
-        # 
+        # Creat an empty list to populate with custom attribute names and values.
+        self.ctrlAttributeList = []
+        # Create a list to parse for attrs to ignore
+        attrIgnoreList = ['v','tx','ty','tz','rx','ry','rz','sx','sy','sz']      
+        
+        for idx in range(len(self.ctrlList))
 
+            # Create empty list for custom attrs
+            ctrlCustomAttr = []
+            # Create list populated with ctrl attributes
+            attrList = mc.listAttr(self.ctrlList[idx], k=True, sn=True)
+            # Create variable for number of attributes in node
+            attr_num = len(attrList)
+            # Create empty dict to format custom attr data
+            attr_dict = {}
+
+            # Iterate through attr list to filter for custom attriutes
+            for attr in attrList:
+                # Conditional logic to filter through attributes
+                if attr in attrIgnoreList:
+                    pass
+                else:
+                    # Append custom attribute to ctrlCustomAttr
+                    ctrlCustomAttr.append(attr)
+
+            # Iterate through custom attr list to format data
+            for jdx in range(len(ctrlCustomAttr)):       
+                # Query the custom attr values
+                attrValue = mc.getAttr('%s.%s'%(m_sel[0],ctrlCustomAttr[jdx]))
+                # Add custom attr key and value pairing to attr_dict
+                attrDict[ctrlCustomAttr[jdx]] = attr_value
+            
+            # Add dict to custom ctrlAttributeList
+            self.ctrlAttributeList.append(attrDict)
+
+        return self.ctrlAttributeList
+
+
+#######################################
+# Set Control Methods
+#######################################
 
     def setControlTranslate(self):
         """
@@ -266,11 +307,3 @@ class Pose(object):
 
     
     def importPose(self):
-
-
-
-
-
-
-
-
