@@ -47,6 +47,7 @@ class Pose(object):
     Notes          : This object can be used to make the animators workflow more efficient.
     """
 
+
     def __init__(self, poseName):
         """
         This method is to initialize the object with data passed in as the arguments.
@@ -54,11 +55,13 @@ class Pose(object):
         self.poseName          = poseName # The data will be entered by user in GUI wraper
         self.ctrlList          = None     # 
         self.ctrlTranslateList = None     # 
-        self.ctrlRotateList    = None     #  Data will be querried by methods
-        self.ctrlScaleList     = None     # 
+        self.ctrlRotateList    = None     #
+        self.ctrlScaleList     = None     #  Data will be querried by methods 
         self.ctrlNameList      = None     #
+        self.ctrlAttributeList = None     #
         self.jsonString        = None     # 
-    
+
+
     def getControlList(self):
         """
         This method fetches all control nodes and populates a list with them.
@@ -76,6 +79,7 @@ class Pose(object):
             self.ctrlList.append(mSel[idx])
 
         return self.ctrlList
+
 
     def getControlTranslate(self):
         """
@@ -189,7 +193,42 @@ class Pose(object):
         except:
             mc.error("Failed to extract control name.")
 
-        return self.ctrlNameList                
+        return self.ctrlNameList
+
+
+    def getControlAttributes(self):
+        """
+        This method querries each control for custom attribute values
+        and populates a list with them.
+        """
+
+        # 
+
+
+    def setControlTranslate(self):
+        """
+        This method iterates through ctrlList and sets each controls translate values. 
+        """
+
+
+    def setControlRotate(self):
+        """
+        This method iterates through ctrlList and sets each controls rotate values. 
+        """
+    
+
+    def setControlScale(self):
+        """
+        This method iterates through ctrlList and sets each controls scale values. 
+        """
+
+
+    
+    def setControlAttribute(self):
+        """
+        This method iterates through the ctrlList and sets the 
+        custom attributes with new values.
+        """
 
 
     def dataToWrite(self):
@@ -208,11 +247,13 @@ class Pose(object):
                 'Name'      : self.ctrlNameList[idx],
                 'Translate' : self.ctrlTranslateList[idx],
                 'Rotate'    : self.ctrlRotateList[idx],
-                'Scale'     : self.ctrlScaleList[idx]
+                'Scale'     : self.ctrlScaleList[idx],
+                
             }
-            self.jsonString[self.ctrlNum[idx]] = self.ctrl.Node
+            self.jsonString[self.ctrlNum[idx]] = ctrl.Node
 
         return self.jsonString
+
 
     def exportPose(self):
         """
@@ -222,6 +263,9 @@ class Pose(object):
         # Use context manager to write object data to disk.
         with open(<fileName>, 'w+') as jsonFile:
             json.dump(self.jsonString, jsonFile,sort_keys=True, indent=4, separators=(',' , ':'))
+
+    
+    def importPose(self):
 
 
 
